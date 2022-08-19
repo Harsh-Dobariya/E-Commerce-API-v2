@@ -1,12 +1,12 @@
 const {
-    getAllUsers,
-    showCurrentUser,
-    updateUser,
-    updateUserPassword,
-    getSingleUser
-  } = require("../controllers/userController"),
-  { authenticateUser, authorizeRoles } = require("../middleware/authentication"),
-  router = require("express").Router();
+        getAllUsers,
+        showCurrentUser,
+        updateUser,
+        updateUserPassword,
+        getSingleUser
+    } = require("../controllers/userController"),
+    { authenticateUser, authorizeRoles } = require("../middleware/authentication"),
+    router = require("express").Router();
 
 router.get("/", authenticateUser, authorizeRoles("admin"), getAllUsers);
 
