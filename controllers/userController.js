@@ -12,7 +12,7 @@ module.exports = {
         const user = await User.findById(req.params.userId).select("-password");
         if (!user) throw new CustomError.NotFoundError(`No user with id: ${req.params.userId}`);
 
-        checkPermission(req.user, user);
+        checkPermission(req.user, user._id);
         res.send({ user });
     },
 

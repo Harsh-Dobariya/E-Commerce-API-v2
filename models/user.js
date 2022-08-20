@@ -38,8 +38,8 @@ userSchema.methods.comparePassword = async function (password) {
     if (!isMatch) throw new UnauthenticatedError("Invalid password provided");
 };
 
-userSchema.statics.login = async (email, password) => {
-    const user = await User.findOne({ email });
+userSchema.statics.login = async function (email, password) {
+    const user = await this.model("User").findOne({ email });
     if (!user) throw new UnauthenticatedError("Invalid email or password");
 
     const isMatch = await bcrypt.compare(password, user.password);
@@ -48,6 +48,4 @@ userSchema.statics.login = async (email, password) => {
     return user;
 };
 
-const User = mongoose.model("User", userSchema, "User");
-
-module.exports = User;
+module.exports = mongoose.model("User", userSchema, "User");
