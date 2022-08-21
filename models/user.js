@@ -25,6 +25,22 @@ const userSchema = new mongoose.Schema({
         type: String,
         enum: ["admin", "user"],
         default: "user"
+    },
+    verificationToken: {
+        type: String
+    },
+    isVerified: {
+        type: Boolean,
+        default: false
+    },
+    verified: {
+        type: Date
+    },
+    passwordToken: {
+        type: String
+    },
+    passwordTokenExpiry: {
+        type: Date
     }
 });
 
@@ -44,6 +60,8 @@ userSchema.statics.login = async function (email, password) {
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) throw new UnauthenticatedError("Invalid email or password");
+
+    if (!user.isVerified) throw new UnauthenticatedError("Please verify your email");
 
     return user;
 };

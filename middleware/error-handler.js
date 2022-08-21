@@ -1,10 +1,10 @@
 const { StatusCodes } = require("http-status-codes");
 const errorHandlerMiddleware = (err, req, res, next) => {
     let customError = {
-        // set default
         statusCode: err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR,
         msg: err.message || "Something went wrong try again later"
     };
+
     if (err.name === "ValidationError") {
         customError.msg = Object.values(err.errors)
             .map((item) => item.message)
@@ -20,7 +20,12 @@ const errorHandlerMiddleware = (err, req, res, next) => {
         customError.statusCode = 404;
     }
 
-    return res.status(customError.statusCode).json({ error: customError });
+    return res.status(customError.statusCode).json({
+        success: false,
+        status: customError.statusCode,
+        msg: customError.msg,
+        stack: process.env.NODE_ENV === "development" ? err.stack : {}
+    });
 };
 
 module.exports = errorHandlerMiddleware;
