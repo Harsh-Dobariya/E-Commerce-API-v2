@@ -1,0 +1,745 @@
+{
+	"info": {
+		"_postman_id": "f2e7a6a4-be73-46a4-900a-2c7db571e7fa",
+		"name": "E-Commerce-API-v2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set(\"registerEmail\", JSON.parse(pm.request.body.raw).email);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set(\"verificationToken\", pm.response.json().verificationToken);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Harsh\",\r\n    \"email\": \"harsh4@gmail.com\",\r\n    \"password\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{DOMAIN}}/auth/register",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"harsh@gmail.com\",\r\n    \"password\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{DOMAIN}}/auth/login",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{DOMAIN}}/auth/logout",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify Email",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"token\": \"{{verificationToken}}\",\r\n    \"email\": \"{{registerEmail}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{DOMAIN}}/auth/verify-email",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"auth",
+								"verify-email"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Forgot Password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set(\"resetPasswordToken\", pm.response.json().passwordToken);\r",
+									"pm.collectionVariables.set(\"passwordEmail\", pm.response.json().email);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"harsh@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{DOMAIN}}/auth/forgot-password",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"auth",
+								"forgot-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reset Password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"token\": \"{{resetPasswordToken}}\",\r\n    \"email\": \"{{passwordEmail}}\",\r\n    \"password\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{DOMAIN}}/auth/reset-password",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"auth",
+								"reset-password"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Get All Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{DOMAIN}}/users",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show Current User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{DOMAIN}}/users/showMe",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"users",
+								"showMe"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{DOMAIN}}/users/62ffe27f846346e90b4dc5b9",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"users",
+								"62ffe27f846346e90b4dc5b9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{DOMAIN}}/users/updateUser",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"users",
+								"updateUser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User Password",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{DOMAIN}}/users/updateUserPassword",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"users",
+								"updateUserPassword"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Product",
+			"item": [
+				{
+					"name": "Create Product",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Product-1\",\r\n    \"description\": \"Product-1 description\",\r\n    \"category\": \"office\",\r\n    \"company\": \"marcos\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{DOMAIN}}/products",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{DOMAIN}}/products",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single Product",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{DOMAIN}}/products/62ffe8a97abbb99a43a4286e",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"products",
+								"62ffe8a97abbb99a43a4286e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{DOMAIN}}/products/62ffe27f846346e90b4dc5b9",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"products",
+								"62ffe27f846346e90b4dc5b9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Product",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{DOMAIN}}/products/62ffe8a97abbb99a43a4286e",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"products",
+								"62ffe8a97abbb99a43a4286e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Upload Image",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/harsh/Desktop/watch.jpeg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{DOMAIN}}/products/uploadImage",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"products",
+								"uploadImage"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single Product Review",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{DOMAIN}}/products/62ffe8a97abbb99a43a4286e/reviews",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"products",
+								"62ffe8a97abbb99a43a4286e",
+								"reviews"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Review",
+			"item": [
+				{
+					"name": "Create Review",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"product\": \"6300d2cb6a40644abeaaa09a\",\r\n    \"rating\": 5,\r\n    \"title\": \"Good product\",\r\n    \"comment\": \"very, very good product\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{DOMAIN}}/reviews",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"reviews"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Reviews",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{DOMAIN}}/reviews",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"reviews"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single Review",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{DOMAIN}}/reviews/123",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"reviews",
+								"123"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Review",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"rating\": \"5\",\r\n    \"title\": \"Good Product\",\r\n    \"comment\": \"Very good product\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{DOMAIN}}/reviews/6300d3296a40644abeaaa0a8",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"reviews",
+								"6300d3296a40644abeaaa0a8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Review",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{DOMAIN}}/reviews/6300d3016a40644abeaaa09f",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"reviews",
+								"6300d3016a40644abeaaa09f"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Order",
+			"item": [
+				{
+					"name": "Create Order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"tax\": 399,\r\n    \"shippingFee\": 499,\r\n    \"items\": [\r\n        {\r\n            \"name\": \"accent chair\",\r\n            \"price\": 2599,\r\n            \"image\": \"https://dl.airtable.com/.attachmentThumbnails/e8bc3791196535af65f40e36993b9e1f/438bd160\",\r\n            \"amount\": 34,\r\n            \"product\": \"6300d2cb6a40644abeaaa09a\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{DOMAIN}}/orders",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Orders",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{DOMAIN}}/orders",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single Order",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{DOMAIN}}/orders/6300e881a8d919a6d074e7de",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"orders",
+								"6300e881a8d919a6d074e7de"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Current User Orders",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{DOMAIN}}/orders/showAllMyOrders",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"orders",
+								"showAllMyOrders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Order",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"paymentIntentId\": \"Some Random Id\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{DOMAIN}}/orders/6300e881a8d919a6d074e7de",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"orders",
+								"6300e881a8d919a6d074e7de"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Order",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{DOMAIN}}/orders/123",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"orders",
+								"123"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "DOMAIN",
+			"value": "http://localhost:3000/api/v1",
+			"type": "default"
+		},
+		{
+			"key": "registerEmail",
+			"value": ""
+		},
+		{
+			"key": "verificationToken",
+			"value": ""
+		},
+		{
+			"key": "resetPasswordToken",
+			"value": ""
+		},
+		{
+			"key": "passwordEmail",
+			"value": ""
+		}
+	]
+}
