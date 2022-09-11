@@ -4,6 +4,7 @@ const checkPermission = require("./checkPermissions");
 const sendVerificationEmail = require("./sendVerificationEmail");
 const sendResetPasswordEmail = require("./sendResetPasswordEmail");
 const createHash = require("./createHash");
+const logger = require("./logger");
 
 module.exports = {
     createTokenUser,
@@ -13,5 +14,6 @@ module.exports = {
     checkPermission,
     sendVerificationEmail,
     sendResetPasswordEmail,
-    createHash
+    createHash,
+    logger
 };

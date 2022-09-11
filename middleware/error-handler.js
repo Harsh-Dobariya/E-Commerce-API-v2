@@ -1,4 +1,6 @@
 const { StatusCodes } = require("http-status-codes");
+const { logger } = require("../utils");
+
 const errorHandlerMiddleware = (err, req, res, next) => {
     let customError = {
         statusCode: err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR,
@@ -19,6 +21,8 @@ const errorHandlerMiddleware = (err, req, res, next) => {
         customError.msg = `No item found with id : ${err.value}`;
         customError.statusCode = 404;
     }
+
+    logger.error(`${customError.statusCode} - ${customError.msg} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
 
     return res.status(customError.statusCode).json({
         success: false,
